@@ -1,0 +1,59 @@
+--Murderers VS Sheriffs
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
+local Window = Library.CreateLib("Spin For Free GUI", "DarkTheme") 
+local Tab1 = Window:NewTab("Autofarm")
+local Tab1Section = Tab1:NewSection("Main")
+
+
+local function teleportToPlayer(player)
+    local character = game.Players.LocalPlayer.Character
+    local targetCharacter = player.Character
+    if character and targetCharacter then
+        local rootPart = character:FindFirstChild("HumanoidRootPart")
+        local targetRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
+        if rootPart and targetRootPart then
+            rootPart.CFrame = targetRootPart.CFrame
+        end
+    end
+end
+
+-- Get the Players service
+local players = game:GetService("Players")
+
+-- Loop through all players
+for _, player in ipairs(players:GetPlayers()) do
+    -- Check if the player is on the "Sheriffs" team
+    if player.Team and player.Team.Name == "Sheriffs" then
+        -- Teleport to the player
+        teleportToPlayer(player)
+        -- Wait a short time before teleporting to the next player
+        wait(1)
+    end
+end
+
+
+
+
+
+
+Tab1Section:NewToggle("Teleport to Sheriffs", "Farms impossible obby.", function(t)
+getgenv().FLO = t
+while getgenv().FLO and wait(.3) do
+for _, player in ipairs(players:GetPlayers()) do
+    -- Check if the player is on the "Sheriffs" team
+    if player.Team and player.Team.Name == "Sheriffs" then
+        -- Teleport to the player
+        teleportToPlayer(player)
+        -- Wait a short time before teleporting to the next player
+        wait(1)
+    end
+end
+end
+end)
+
+
+Tab1Section:NewButton("Anti AFK", "Never get kicked for being AFK", function()
+game.StarterGui:SetCore("SendNotification",{Title = "Notification",Text = "Anti-AFK started."})
+for a,b in pairs(getconnections(game.Players.LocalPlayer.Idled))do b:Disable()end
+end)
