@@ -6,14 +6,29 @@ local Tab1 = Window:NewTab("Autofarms")
 local Tab1Section = Tab1:NewSection("Main")
 
 
-local function moveToPlayer(targetPlayer)
+local function autoEquipKnife()
+    local localPlayer = game.Players.LocalPlayer
+    local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+    local backpack = localPlayer.Backpack
+
+    local knife = character:FindFirstChild("Knife") or backpack:FindFirstChild("Knife")
+
+    if knife and knife:IsA("Tool") then
+        character.Humanoid:EquipTool(knife)
+    end
+end
+
+
+
+local function moveToPlayerBehind(targetPlayer)
     local localCharacter = game.Players.LocalPlayer.Character
     local targetCharacter = targetPlayer.Character
     if localCharacter and targetCharacter then
         local localRootPart = localCharacter:FindFirstChild("HumanoidRootPart")
         local targetRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
         if localRootPart and targetRootPart then
-            localRootPart.CFrame = targetRootPart.CFrame
+            local offset = targetRootPart.CFrame.LookVector * -3
+            localRootPart.CFrame = targetRootPart.CFrame + offset
         end
     end
 end
@@ -35,9 +50,21 @@ end
 
 if #sheriffPlayers > 0 then
     local randomPlayer = sheriffPlayers[math.random(1, #sheriffPlayers)]
-    moveToPlayer(randomPlayer)
+    moveToPlayerBehind(randomPlayer)
 end
 
 
 end
 end)
+
+Tab1Section:NewToggle("Autoequip knife", "automatically equips your knife", function(t)
+getgenv().FLO = t
+while getgenv().FLO and wait(0.1) do
+
+
+autoEquipKnife()
+
+
+end
+end)
+
