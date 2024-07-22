@@ -1,8 +1,8 @@
 --Murderers VS Sheriffs
 
 local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
-local Window = Library.CreateLib("Spin For Free GUI", "DarkTheme") 
-local Tab1 = Window:NewTab("Autofarm")
+local Window = Library.CreateLib("Manny Scripts", "DarkTheme") 
+local Tab1 = Window:NewTab("Autofarms")
 local Tab1Section = Tab1:NewSection("Main")
 
 
@@ -18,42 +18,50 @@ local function teleportToPlayer(player)
     end
 end
 
--- Get the Players service
+local function moveToPlayer(targetPlayer)
+    local localCharacter = game.Players.LocalPlayer.Character
+    local targetCharacter = targetPlayer.Character
+    if localCharacter and targetCharacter then
+        local localRootPart = localCharacter:FindFirstChild("HumanoidRootPart")
+        local targetRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
+        if localRootPart and targetRootPart then
+            localRootPart.CFrame = targetRootPart.CFrame
+        end
+    end
+end
+
 local players = game:GetService("Players")
 
--- Loop through all players
-for _, player in ipairs(players:GetPlayers()) do
-    -- Check if the player is on the "Sheriffs" team
-    if player.Team and player.Team.Name == "Sheriffs" then
-        -- Teleport to the player
-        teleportToPlayer(player)
-        -- Wait a short time before teleporting to the next player
-        wait(1)
-    end
-end
+local playerService = game:GetService("Players")
 
 
-
-
-
-
-Tab1Section:NewToggle("Teleport to Sheriffs", "Farms impossible obby.", function(t)
+Tab1Section:NewToggle("Teleport to all sheriffs", "teleports you to every sheriff", function(t)
 getgenv().FLO = t
-while getgenv().FLO and wait(.3) do
+while getgenv().FLO and wait(1) do
+
+
 for _, player in ipairs(players:GetPlayers()) do
-    -- Check if the player is on the "Sheriffs" team
     if player.Team and player.Team.Name == "Sheriffs" then
-        -- Teleport to the player
         teleportToPlayer(player)
-        -- Wait a short time before teleporting to the next player
-        wait(1)
+        break
     end
 end
+
+
 end
 end)
 
+Tab1Section:NewToggle("Teleport to all murderers", "teleports you to every murderer", function(t)
+getgenv().FLO = t
+while getgenv().FLO and wait(1) do
 
-Tab1Section:NewButton("Anti AFK", "Never get kicked for being AFK", function()
-game.StarterGui:SetCore("SendNotification",{Title = "Notification",Text = "Anti-AFK started."})
-for a,b in pairs(getconnections(game.Players.LocalPlayer.Idled))do b:Disable()end
+
+for _, player in ipairs(playerService:GetPlayers()) do
+    if player.Team and player.Team.Name == "Murderers" then
+        moveToPlayer(player)
+        break
+    end
+end
+
+end
 end)
