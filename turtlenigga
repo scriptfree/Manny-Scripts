@@ -1,5 +1,5 @@
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/3aze/LTS/main/lib/turtle.lua"))()
-local window = library:Window("Example")
+local window = library:Window("Big Dick Energy hub")
 
 window:Button("Button",function()
    print("hi")
