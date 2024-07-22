@@ -1,0 +1,43 @@
+--Murderers VS Sheriffs
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
+local Window = Library.CreateLib("Manny Scripts", "DarkTheme") 
+local Tab1 = Window:NewTab("Autofarms")
+local Tab1Section = Tab1:NewSection("Main")
+
+
+local function moveToPlayer(targetPlayer)
+    local localCharacter = game.Players.LocalPlayer.Character
+    local targetCharacter = targetPlayer.Character
+    if localCharacter and targetCharacter then
+        local localRootPart = localCharacter:FindFirstChild("HumanoidRootPart")
+        local targetRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
+        if localRootPart and targetRootPart then
+            localRootPart.CFrame = targetRootPart.CFrame
+        end
+    end
+end
+
+local playerService = game:GetService("Players")
+local sheriffPlayers = {}
+
+
+Tab1Section:NewToggle("Teleport to all sheriffs", "teleports you to every sheriff", function(t)
+getgenv().FLO = t
+while getgenv().FLO and wait(1) do
+
+
+for _, player in ipairs(playerService:GetPlayers()) do
+    if player.Team and player.Team.Name == "Sheriffs" then
+        table.insert(sheriffPlayers, player)
+    end
+end
+
+if #sheriffPlayers > 0 then
+    local randomPlayer = sheriffPlayers[math.random(1, #sheriffPlayers)]
+    moveToPlayer(randomPlayer)
+end
+
+
+end
+end)
