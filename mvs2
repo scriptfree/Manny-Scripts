@@ -59,7 +59,7 @@ end)
 
 Tab1Section:NewToggle("Autoequip knife", "automatically equips your knife", function(t)
 getgenv().FLO = t
-while getgenv().FLO and wait(0.1) do
+while getgenv().FLO and wait(0.5) do
 
 
 autoEquipKnife()
