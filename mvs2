@@ -27,7 +27,7 @@ local function moveToPlayerBehind(targetPlayer)
         local localRootPart = localCharacter:FindFirstChild("HumanoidRootPart")
         local targetRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
         if localRootPart and targetRootPart then
-            local offset = targetRootPart.CFrame.LookVector * -3
+            local offset = targetRootPart.CFrame.LookVector * -1
             localRootPart.CFrame = targetRootPart.CFrame + offset
         end
     end
