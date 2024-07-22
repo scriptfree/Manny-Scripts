@@ -1,0 +1,22 @@
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/3aze/LTS/main/lib/turtle.lua"))()
+local window = library:Window("Example")
+
+window:Button("Button",function()
+   print("hi")
+end)
+
+window:Toggle("Toggle",false,function(t)
+    print(t)
+end)
+
+window:Slider("Slider",0,100,20,function(t)
+   print(t)
+end)
+
+window:Dropdown("Dropdown",{"1","2"},function(t)
+   print(t)
+end)
+
+window:Box("Textbox",function(t)
+   print(t)
+end)
