@@ -27,13 +27,35 @@ local function moveToPlayerBehind(targetPlayer)
         local localRootPart = localCharacter:FindFirstChild("HumanoidRootPart")
         local targetRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
         if localRootPart and targetRootPart then
-            local offset = targetRootPart.CFrame.LookVector * -1
+            local offset = targetRootPart.CFrame.LookVector * -3
             localRootPart.CFrame = targetRootPart.CFrame + offset
         end
     end
 end
 
-local playerService = game:GetService("Players")
+local function hasForceField(character)
+    return character:FindFirstChildOfClass("ForceField") ~= nil
+end
+
+local function updateSheriffPlayers(sheriffPlayers)
+    for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+        if player.Team and player.Team.Name == "Sheriffs" then
+            local targetCharacter = player.Character
+            if targetCharacter and not hasForceField(targetCharacter) then
+                if not table.find(sheriffPlayers, player) then
+                    table.insert(sheriffPlayers, player)
+                end
+            elseif hasForceField(targetCharacter) then
+                -- Remove player with ForceField from the list if present
+                local index = table.find(sheriffPlayers, player)
+                if index then
+                    table.remove(sheriffPlayers, index)
+                end
+            end
+        end
+    end
+end
+
 local sheriffPlayers = {}
 
 
@@ -42,17 +64,22 @@ getgenv().FLO = t
 while getgenv().FLO and wait(0.2) do
 
 
-for _, player in ipairs(playerService:GetPlayers()) do
-    if player.Team and player.Team.Name == "Sheriffs" then
-        table.insert(sheriffPlayers, player)
-    end
-end
+updateSheriffPlayers(sheriffPlayers)
+
+-- Connect to PlayerAdded and CharacterAdded events to update the list dynamically
+game:GetService("Players").PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        updateSheriffPlayers(sheriffPlayers)
+    end)
+end)
+
+-- Run the update function initially to populate the list
+updateSheriffPlayers(sheriffPlayers)
 
 if #sheriffPlayers > 0 then
     local randomPlayer = sheriffPlayers[math.random(1, #sheriffPlayers)]
     moveToPlayerBehind(randomPlayer)
 end
-
 
 end
 end)
