@@ -60,7 +60,7 @@ local sheriffPlayers = {}
 
 Tab1Section:NewToggle("Teleport to all sheriffs", "teleports you to every sheriff", function(t)
 getgenv().FLO = t
-while getgenv().FLO and wait(0.01) do
+while getgenv().FLO and wait(0.05) do
 
 
 updateSheriffPlayers(sheriffPlayers)
