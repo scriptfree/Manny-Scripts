@@ -39,7 +39,7 @@ local function moveToPlayerBehind(targetPlayer)
         local localRootPart = localCharacter:FindFirstChild("HumanoidRootPart")
         local targetRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
         if localRootPart and targetRootPart then
-            local offset = targetRootPart.CFrame.LookVector * -1
+            local offset = targetRootPart.CFrame.LookVector * -3
             localRootPart.CFrame = targetRootPart.CFrame + offset
         end
     end
@@ -50,19 +50,30 @@ local function hasForceField(character)
 end
 
 local function updateSheriffPlayers(sheriffPlayers)
+    local currentSheriffs = {}
+
     for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
         if player.Team and player.Team.Name == "Sheriffs" then
             local targetCharacter = player.Character
             if targetCharacter and not hasForceField(targetCharacter) then
-                if not table.find(sheriffPlayers, player) then
-                    table.insert(sheriffPlayers, player)
-                end
-            elseif hasForceField(targetCharacter) then
-                local index = table.find(sheriffPlayers, player)
-                if index then
-                    table.remove(sheriffPlayers, index)
-                end
+                table.insert(currentSheriffs, player)
             end
+        end
+    end
+
+    -- Update the sheriffPlayers list
+    for _, player in ipairs(sheriffPlayers) do
+        local index = table.find(currentSheriffs, player)
+        if not index then
+            -- Remove players who are no longer in the Sheriffs team
+            table.remove(sheriffPlayers, table.find(sheriffPlayers, player))
+        end
+    end
+
+    -- Add new sheriff players
+    for _, player in ipairs(currentSheriffs) do
+        if not table.find(sheriffPlayers, player) then
+            table.insert(sheriffPlayers, player)
         end
     end
 end
@@ -77,18 +88,27 @@ while getgenv().FLO and wait(0.05) do
 
 updateSheriffPlayers(sheriffPlayers)
 
+-- Connect to PlayerAdded and CharacterAdded events to update the list dynamically
 game:GetService("Players").PlayerAdded:Connect(function(player)
     player.CharacterAdded:Connect(function()
         updateSheriffPlayers(sheriffPlayers)
     end)
 end)
 
+-- Run the update function initially to populate the list
 updateSheriffPlayers(sheriffPlayers)
 
-if #sheriffPlayers > 0 then
-    local randomPlayer = sheriffPlayers[math.random(1, #sheriffPlayers)]
-    moveToPlayerBehind(randomPlayer)
+-- Check if there are any sheriff players available for teleportation
+local function checkAndTeleport()
+    if #sheriffPlayers > 0 then
+        local randomPlayer = sheriffPlayers[math.random(1, #sheriffPlayers)]
+        moveToPlayerBehind(randomPlayer)
+    end
 end
+
+-- Call the function to teleport initially
+checkAndTeleport()
+
 
 end
 end)
