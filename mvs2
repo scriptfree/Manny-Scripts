@@ -46,7 +46,6 @@ local function updateSheriffPlayers(sheriffPlayers)
                     table.insert(sheriffPlayers, player)
                 end
             elseif hasForceField(targetCharacter) then
-                -- Remove player with ForceField from the list if present
                 local index = table.find(sheriffPlayers, player)
                 if index then
                     table.remove(sheriffPlayers, index)
@@ -61,19 +60,17 @@ local sheriffPlayers = {}
 
 Tab1Section:NewToggle("Teleport to all sheriffs", "teleports you to every sheriff", function(t)
 getgenv().FLO = t
-while getgenv().FLO and wait(0.2) do
+while getgenv().FLO and wait(0.01) do
 
 
 updateSheriffPlayers(sheriffPlayers)
 
--- Connect to PlayerAdded and CharacterAdded events to update the list dynamically
 game:GetService("Players").PlayerAdded:Connect(function(player)
     player.CharacterAdded:Connect(function()
         updateSheriffPlayers(sheriffPlayers)
     end)
 end)
 
--- Run the update function initially to populate the list
 updateSheriffPlayers(sheriffPlayers)
 
 if #sheriffPlayers > 0 then
