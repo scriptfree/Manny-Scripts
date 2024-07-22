@@ -2,7 +2,7 @@
 
 local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
 local Window = Library.CreateLib("Manny Scripts", "DarkTheme") 
-local Tab1 = Window:NewTab("Autofarms")
+local Tab1 = Window:NewTab("MVS - Xub's Scripts")
 local Tab1Section = Tab1:NewSection("Main")
 
 
