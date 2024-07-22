@@ -18,18 +18,6 @@ local function autoEquipKnife()
     end
 end
 
-local function autoEquipGun()
-    local localPlayer = game.Players.LocalPlayer
-    local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
-    local backpack = localPlayer.Backpack
-
-    local gun = character:FindFirstChild("Gun") or backpack:FindFirstChild("Gun")
-
-    if gun and gun:IsA("Tool") then
-        character.Humanoid:EquipTool(Gun)
-    end
-end
-
 
 
 local function moveToPlayerBehind(targetPlayer)
@@ -124,13 +112,5 @@ autoEquipKnife()
 end
 end)
 
-Tab1Section:NewToggle("Autoequip gun", "automatically equips your gun", function(t)
-getgenv().FLO = t
-while getgenv().FLO and wait(0.5) do
 
 
-autoEquipGun()
-
-
-end
-end)
