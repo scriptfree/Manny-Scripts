@@ -1,8 +1,8 @@
 --Murderers VS Sheriffs
 
 local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
-local Window = Library.CreateLib("Manny Scripts", "DarkTheme") 
-local Tab1 = Window:NewTab("MVS - Xub's Scripts")
+local Window = Library.CreateLib("MVS- Xub's Scripts", "DarkTheme") 
+local Tab1 = Window:NewTab("Murderers")
 local Tab1Section = Tab1:NewSection("Main")
 
 
