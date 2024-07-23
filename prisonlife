@@ -20,6 +20,37 @@ local Tab1Section = Tab1:NewSection("Configs")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local playersService = game:GetService("Players")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+
+local function getAllPlayers()
+    local playerList = {}
+    local currentPlayer = playersService.LocalPlayer
+    for _, player in pairs(playersService:GetPlayers()) do
+        if player ~= currentPlayer then
+            table.insert(playerList, player)
+        end
+    end
+    return playerList
+end
+
+local function attackUntilDead(targetPlayer)
+    local currentPlayer = playersService.LocalPlayer
+    while targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") and targetPlayer.Character.Humanoid.Health > 0 do
+        -- Teleport to the target player
+        if currentPlayer and currentPlayer.Character and currentPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            currentPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame
+        end
+        
+        -- Punch the target player
+        local args = {
+            [1] = targetPlayer
+        }
+        replicatedStorage:WaitForChild("meleeEvent"):FireServer(unpack(args))
+        wait(0.01) -- Small delay to avoid flooding the server
+    end
+end
+
 local function getInmates()
     local inmates = {}
     local localPlayer = Players.LocalPlayer
@@ -54,6 +85,15 @@ for i, target in ipairs(inmates) do
 
     -- Punch the target until their health is 0
     punchUntilDead(target)
+end
+
+end)
+
+Tab1Section:NewButton("Kill all", "askjdkasdasd", function()
+
+local allPlayers = getAllPlayers()
+for _, targetPlayer in ipairs(allPlayers) do
+    attackUntilDead(targetPlayer)
 end
 
 end)
