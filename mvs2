@@ -1,9 +1,13 @@
 --Murderers VS Sheriffs
 
+
+
 local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
 local Window = Library.CreateLib("MVS - Xub's Scripts", "DarkTheme") 
 local Tab1 = Window:NewTab("Murderers")
+local Tab2 = Window:NewTab("Other")
 local Tab1Section = Tab1:NewSection("Main")
+local Tab1Section = Tab1:NewSection("Important")
 
 
 local function autoEquipKnife()
@@ -68,9 +72,6 @@ end
 
 local sheriffPlayers = {}
 
-Tab1Section:NewButton("Delete Spawn Warning", "Deletes the spawn warning", function()
-        game:GetService("Players").LocalPlayer.SpawnWarning:Destroy()
-end)
 
 Tab1Section:NewToggle("Teleport to all sheriffs", "teleports you to every sheriff", function(t)
 getgenv().FLO = t
@@ -116,7 +117,7 @@ end
 end)
 
 
-Tab1Section:NewToggle("Anti Spawn Protection", "removes any damage taken from enemy spawn", function(t)
+Tab2Section:NewToggle("Anti Spawn Protection", "removes any damage taken from enemy spawn", function(t)
 getgenv().FLO = t
 while getgenv().FLO and wait(0.01) do
 
@@ -126,3 +127,7 @@ game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Spawn
 
 end
 end) 
+
+Tab2Section:NewButton("Delete Spawn Warning", "Deletes the spawn warning", function()
+        game:GetService("Players").LocalPlayer.SpawnWarning:Destroy()
+end)
