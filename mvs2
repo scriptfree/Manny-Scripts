@@ -121,3 +121,7 @@ Tab1Section:NewToggle(
     game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnProtection"):Destroy()
      end
 end)
+
+Tab1Section:NewButton("Del Warning", "Deletes the warning", function()
+        game:GetService("Players").LocalPlayer.SpawnWarning:Destroy()
+end)
