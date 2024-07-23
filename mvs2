@@ -1,6 +1,5 @@
 --Murderers VS Sheriffs
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptfree/Manny-Scripts/main/wl")()
 
 local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
 local Window = Library.CreateLib("MVS - Xub's Scripts", "DarkTheme") 
