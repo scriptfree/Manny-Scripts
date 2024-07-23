@@ -40,7 +40,7 @@ end
 local function updateSheriffPlayers(sheriffPlayers)
     local currentSheriffs = {}
 
-    for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+    for , player in ipairs(game:GetService("Players"):GetPlayers()) do
         if player.Team and player.Team.Name == "Sheriffs" then
             local targetCharacter = player.Character
             if targetCharacter and not hasForceField(targetCharacter) then
@@ -50,7 +50,7 @@ local function updateSheriffPlayers(sheriffPlayers)
     end
 
     -- Update the sheriffPlayers list
-    for _, player in ipairs(sheriffPlayers) do
+    for , player in ipairs(sheriffPlayers) do
         local index = table.find(currentSheriffs, player)
         if not index then
             -- Remove players who are no longer in the Sheriffs team
@@ -68,6 +68,9 @@ end
 
 local sheriffPlayers = {}
 
+Tab1Section:NewButton("Delete Spawn Warning", "Deletes the spawn warning", function()
+        game:GetService("Players").LocalPlayer.SpawnWarning:Destroy()
+end)
 
 Tab1Section:NewToggle("Teleport to all sheriffs", "teleports you to every sheriff", function(t)
 getgenv().FLO = t
@@ -122,4 +125,4 @@ game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Spawn
 
 
 end
-end)
+end) 
