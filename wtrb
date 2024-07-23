@@ -1,0 +1,30 @@
+--welcome to roblox building nuker
+
+
+ame:GetService("StarterGui"):SetCore("SendNotification",{
+                Title = "Loaded!";
+                Text = "Provided by xubs script! ";
+                Duration = 1.5;})
+
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
+local Window = Library.CreateLib("Welcome to roblox bubilding", "DarkTheme") 
+
+
+local Tab1 = Window:NewTab("Main")
+local Tab1Section = Tab1:NewSection("Configs")
+
+
+
+Tab1Section:NewToggle("Nuke", "askjdkasdasd", function(t)
+getgenv().FLO = t
+while getgenv().FLO and wait(0.4) do
+
+local args = {
+    [1] = 8819196250,
+    [2] = CFrame.new(-2, 49.70000076293945, -327, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Stamp"):FireServer(unpack(args))
+
+end)
