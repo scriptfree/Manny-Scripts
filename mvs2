@@ -113,4 +113,13 @@ end
 end)
 
 
+Tab1Section:NewToggle("Anti Spawn Protection", "automatically equips your knife", function(t)
+getgenv().FLO = t
+while getgenv().FLO and wait(0.01) do
 
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnProtection"):Destroy()
+
+
+end
+end)
