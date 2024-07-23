@@ -1,13 +1,9 @@
 --Murderers VS Sheriffs
 
-
-local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
-local Window = Library.CreateLib("MVS - Xub's Scripts", "DarkTheme") 
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))()
+local Window = Library.CreateLib("MVS - Xub's Scripts", "DarkTheme")
 local Tab1 = Window:NewTab("Murderers")
-local Tab2 = Window:NewTab("Other")
 local Tab1Section = Tab1:NewSection("Main")
-local Tab1Section = Tab1:NewSection("Important")
-
 
 local function autoEquipKnife()
     local localPlayer = game.Players.LocalPlayer
@@ -20,8 +16,6 @@ local function autoEquipKnife()
         character.Humanoid:EquipTool(knife)
     end
 end
-
-
 
 local function moveToPlayerBehind(targetPlayer)
     local localCharacter = game.Players.LocalPlayer.Character
@@ -43,7 +37,7 @@ end
 local function updateSheriffPlayers(sheriffPlayers)
     local currentSheriffs = {}
 
-    for , player in ipairs(game:GetService("Players"):GetPlayers()) do
+    for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
         if player.Team and player.Team.Name == "Sheriffs" then
             local targetCharacter = player.Character
             if targetCharacter and not hasForceField(targetCharacter) then
@@ -53,7 +47,7 @@ local function updateSheriffPlayers(sheriffPlayers)
     end
 
     -- Update the sheriffPlayers list
-    for , player in ipairs(sheriffPlayers) do
+    for _, player in ipairs(sheriffPlayers) do
         local index = table.find(currentSheriffs, player)
         if not index then
             -- Remove players who are no longer in the Sheriffs team
@@ -71,62 +65,59 @@ end
 
 local sheriffPlayers = {}
 
+Tab1Section:NewToggle(
+    "Teleport to all sheriffs",
+    "teleports you to every sheriff",
+    function(t)
+        getgenv().FLO = t
+        while getgenv().FLO and wait(0.05) do
+            updateSheriffPlayers(sheriffPlayers)
 
-Tab1Section:NewToggle("Teleport to all sheriffs", "teleports you to every sheriff", function(t)
-getgenv().FLO = t
-while getgenv().FLO and wait(0.05) do
+            -- Connect to PlayerAdded and CharacterAdded events to update the list dynamically
+            game:GetService("Players").PlayerAdded:Connect(
+                function(player)
+                    player.CharacterAdded:Connect(
+                        function()
+                            updateSheriffPlayers(sheriffPlayers)
+                        end
+                    )
+                end
+            )
 
+            -- Run the update function initially to populate the list
+            updateSheriffPlayers(sheriffPlayers)
 
-updateSheriffPlayers(sheriffPlayers)
+            -- Check if there are any sheriff players available for teleportation
+            local function checkAndTeleport()
+                if #sheriffPlayers > 0 then
+                    local randomPlayer = sheriffPlayers[math.random(1, #sheriffPlayers)]
+                    moveToPlayerBehind(randomPlayer)
+                end
+            end
 
--- Connect to PlayerAdded and CharacterAdded events to update the list dynamically
-game:GetService("Players").PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function()
-        updateSheriffPlayers(sheriffPlayers)
-    end)
-end)
-
--- Run the update function initially to populate the list
-updateSheriffPlayers(sheriffPlayers)
-
--- Check if there are any sheriff players available for teleportation
-local function checkAndTeleport()
-    if #sheriffPlayers > 0 then
-        local randomPlayer = sheriffPlayers[math.random(1, #sheriffPlayers)]
-        moveToPlayerBehind(randomPlayer)
+            -- Call the function to teleport initially
+            checkAndTeleport()
+        end
     end
-end
+)
 
--- Call the function to teleport initially
-checkAndTeleport()
+Tab1Section:NewToggle(
+    "Autoequip knife",
+    "automatically equips your knife",
+    function(t)
+        getgenv().FLO = t
+        while getgenv().FLO and wait(1) do
+            autoEquipKnife()
+        end
+    end
+)
 
-
-end
-end)
-
-Tab1Section:NewToggle("Autoequip knife", "automatically equips your knife", function(t)
-getgenv().FLO = t
-while getgenv().FLO and wait(1) do
-
-
-autoEquipKnife()
-
-
-end
-end)
-
-
-Tab2Section:NewToggle("Anti Spawn Protection", "removes any damage taken from enemy spawn", function(t)
-getgenv().FLO = t
-while getgenv().FLO and wait(0.01) do
-
-
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnProtection"):Destroy()
-
-
-end
-end) 
-
-Tab2Section:NewButton("Delete Spawn Warning", "Deletes the spawn warning", function()
-        game:GetService("Players").LocalPlayer.SpawnWarning:Destroy()
+Tab1Section:NewToggle(
+    "Anti Spawn Protection",
+    "removes any damage taken from enemy spawn",
+    function(t)
+        getgenv().FLO = t
+        while getgenv().FLO and wait(0.01) do
+    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SpawnProtection"):Destroy()
+     end
 end)
