@@ -113,7 +113,7 @@ end
 end)
 
 
-Tab1Section:NewToggle("Anti Spawn Protection", "automatically equips your knife", function(t)
+Tab1Section:NewToggle("Anti Spawn Protection", "removes any damage taken from enemy spawn", function(t)
 getgenv().FLO = t
 while getgenv().FLO and wait(0.01) do
 
