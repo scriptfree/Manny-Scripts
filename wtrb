@@ -16,15 +16,14 @@ local Tab1Section = Tab1:NewSection("Configs")
 
 
 
-Tab1Section:NewToggle("Nuke", "askjdkasdasd", function(t)
+Tab1Section:NewToggle("Nuke", "NUKE.", function(t)
 getgenv().FLO = t
-while getgenv().FLO and wait(0.4) do
-
+while getgenv().FLO and wait(.01) do
 local args = {
     [1] = 8819196250,
     [2] = CFrame.new(-2, 49.70000076293945, -327, -1, 0, 0, 0, 1, 0, 0, 0, -1)
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("Stamp"):FireServer(unpack(args))
-
+end
 end)
