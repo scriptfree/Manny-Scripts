@@ -3,6 +3,7 @@ local Whitelist = {
     "706473811"; -- Auberon_Altas
     "2924066123"; -- queenbrunei
     "2635977433"; -- x_ubs
+    "1381033418"; -- kermithefrog360
 }
 
 local function Plr()
