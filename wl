@@ -8,6 +8,7 @@ local Whitelist = {
 local function Plr()
     if table.find(Whitelist, plr.UserID) then
         print("Welcome ".. plr.Name .."!")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/scriptfree/Manny-Scripts/main/mvs"))()
     else
         plr:Kick("Not In Whitelist.")
     end
