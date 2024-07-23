@@ -21,7 +21,7 @@ getgenv().FLO = t
 while getgenv().FLO and wait(.01) do
 local args = {
     [1] = 8819196250,
-    [2] = CFrame.new(-2, 49.70000076293945, -327, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+    [2] = CFrame.new(-100, 49.70000076293945, -327, -1, 0, 0, 0, 1, 0, 0, 0, -1)
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("Stamp"):FireServer(unpack(args))
