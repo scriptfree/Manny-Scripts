@@ -1,7 +1,7 @@
 --welcome to roblox building nuker
 
 
-ame:GetService("StarterGui"):SetCore("SendNotification",{
+game:GetService("StarterGui"):SetCore("SendNotification",{
                 Title = "Loaded!";
                 Text = "Provided by xubs script! ";
                 Duration = 1.5;})
