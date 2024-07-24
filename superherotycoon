@@ -1,0 +1,7 @@
+local args = {
+    [1] = 5,
+    [2] = "collectMoney",
+    [3] = game:GetService("Players").LocalPlayer
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("ReplicaRemoteEvents"):WaitForChild("Replica_ReplicaSignal"):FireServer(unpack(args))
