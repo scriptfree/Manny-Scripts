@@ -1,3 +1,5 @@
+
+--Auto collect money
 while true do
 local args = {
     [1] = 5,
@@ -8,3 +10,13 @@ local args = {
 game:GetService("ReplicatedStorage"):WaitForChild("ReplicaRemoteEvents"):WaitForChild("Replica_ReplicaSignal"):FireServer(unpack(args))
 wait(0.1)
 end
+
+
+--Gear Giver
+local args = {
+    [1] = 10,
+    [2] = "Power",
+    [3] = "Giver4" --Change the number 1 - 7
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("SharedPackages"):WaitForChild("_Index"):WaitForChild("sleitnick_net@0.1.0"):WaitForChild("net"):WaitForChild("RF/HandleTycoonGiverPlayerRequest"):InvokeServer(unpack(args))
