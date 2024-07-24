@@ -1,3 +1,4 @@
+while true do
 local args = {
     [1] = 5,
     [2] = "collectMoney",
@@ -5,3 +6,5 @@ local args = {
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("ReplicaRemoteEvents"):WaitForChild("Replica_ReplicaSignal"):FireServer(unpack(args))
+wait(1)
+end
