@@ -1,5 +1,11 @@
 --BRING ALL BLOBS
 
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
+local Window = Library.CreateLib("Eat Blob Simulator🔴", "BloodTheme") 
+local Tab1 = Window:NewTab("OP")
+local Tab1Section = Tab1:NewSection("Main")
+
+
 local Workspace = game:GetService("Workspace")
 local LocalPlayer = game.Players.LocalPlayer
 local character = LocalPlayer.Character
@@ -27,4 +33,10 @@ local function teleportBlobsToPlayer()
 end
 
 -- Call the function to manually start the teleport process
+
+
+
+
+Tab1Section:NewButton("Bring All Blobs (LAGGY)", "tps every blob to you", function()
 teleportBlobsToPlayer()
+end)
