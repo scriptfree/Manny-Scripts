@@ -12,7 +12,7 @@ wait(0.1)
 end
 
 
---Gear Giver
+--Give gear
 local args = {
     [1] = 10,
     [2] = "Power",
@@ -20,3 +20,24 @@ local args = {
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("SharedPackages"):WaitForChild("_Index"):WaitForChild("sleitnick_net@0.1.0"):WaitForChild("net"):WaitForChild("RF/HandleTycoonGiverPlayerRequest"):InvokeServer(unpack(args))
+
+--Give all gears
+local args = {
+    [1] = 1, --1 - 10
+    [2] = "Power",
+    [3] = "Giver1" --Change the number 1 - 7
+}
+
+local function updateArgsAndInvoke()
+    for i = 1, 10 do
+        args[1] = i
+        for j = 1, 7 do
+            args[3] = "Giver" .. j
+            game:GetService("ReplicatedStorage"):WaitForChild("SharedPackages"):WaitForChild("_Index"):WaitForChild("sleitnick_net@0.1.0"):WaitForChild("net"):WaitForChild("RF/HandleTycoonGiverPlayerRequest"):InvokeServer(unpack(args))
+            wait(0)
+        end
+    end
+end
+
+-- Start the update loop
+updateArgsAndInvoke()
