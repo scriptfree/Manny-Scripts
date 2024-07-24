@@ -1,0 +1,28 @@
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = game.Players.LocalPlayer
+local character = LocalPlayer.Character
+local hrp = character and character:FindFirstChild("HumanoidRootPart")
+
+-- Function to teleport a Blob object to the player's position
+local function teleportBlobToPlayer(blob)
+    if hrp and blob:IsA("BasePart") then
+        blob.CFrame = hrp.CFrame
+    end
+end
+
+-- Function to find and teleport all Blob objects inside the "Blobs" folder to the player
+local function teleportBlobsToPlayer()
+    local blobsFolder = Workspace:FindFirstChild("Blobs")
+
+    if blobsFolder and blobsFolder:IsA("Folder") then
+        for _, blob in pairs(blobsFolder:GetChildren()) do
+            teleportBlobToPlayer(blob)
+            wait(1) -- Wait 1 second between teleporting blobs
+        end
+    else
+        warn("Blobs folder not found or is not a Folder.")
+    end
+end
+
+-- Start the teleport process
+teleportBlobsToPlayer()
