@@ -41,3 +41,49 @@ end
 
 -- Start the update loop
 updateArgsAndInvoke()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+game:GetService("StarterGui"):SetCore("SendNotification",{
+                Title = "Loaded!";
+                Text = "Provided by xubs script! ";
+                Duration = 1.5;})
+
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
+local Window = Library.CreateLib("Drop the soap GUI", "DarkTheme") 
+
+
+local Tab1 = Window:NewTab("Main")
+local Tab1Section = Tab1:NewSection("Configs")
+
+
+
+Tab1Section:NewButton("Kill all inmates", ".", function()
+
+
+end)
+
+Tab1Section:NewToggle("Auto collect cash", ".", function(t)
+getgenv().FLO = t
+while getgenv().FLO and wait(.3) do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-382.78, 14.1, 1338.41)
+end
+end)
+
+
