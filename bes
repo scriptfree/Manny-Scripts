@@ -1,0 +1,98 @@
+--blob eating sim
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/GdN5iRbt"))() 
+local Window = Library.CreateLib("Eat Blob Simulator", "BloodTheme") 
+local Tab1 = Window:NewTab("OP")
+local Tab1Section = Tab1:NewSection("Main")
+
+
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = game.Players.LocalPlayer
+local character = LocalPlayer.Character
+local hrp = character and character:FindFirstChild("HumanoidRootPart")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- Function to get a player's size from the leaderboard
+local function getPlayerSize(player)
+    local leaderstats = player:FindFirstChild("leaderstats")
+    if leaderstats then
+        local sizeStat = leaderstats:FindFirstChild("Size")
+        if sizeStat then
+            return sizeStat.Value
+        end
+    end
+    return nil
+end
+
+-- Function to teleport to a target player
+local function teleportToPlayer(targetPlayer)
+    local character = LocalPlayer.Character
+    local targetCharacter = targetPlayer.Character
+
+    if character and targetCharacter then
+        local hrp = character:FindFirstChild("HumanoidRootPart")
+        local targetHrp = targetCharacter:FindFirstChild("HumanoidRootPart")
+
+        if hrp and targetHrp then
+            hrp.CFrame = targetHrp.CFrame
+        end
+    end
+end
+
+-- Main function to check sizes and teleport
+local function checkSizesAndTeleport()
+    local mySize = getPlayerSize(LocalPlayer)
+
+    if mySize then
+        for _, player in pairs(Players:GetPlayers()) do
+            if player ~= LocalPlayer then
+                local playerSize = getPlayerSize(player)
+                if playerSize and playerSize < mySize then
+                    teleportToPlayer(player)
+                    wait(0.25) -- Wait 1 second between teleports
+                end
+            end
+        end
+    else
+        warn("Could not retrieve your size from the leaderboard.")
+    end
+end
+
+-- Function to teleport a Blob object to the player's position
+function teleportBlobToPlayer(blob)
+    if hrp and blob:IsA("BasePart") then
+        blob.CFrame = hrp.CFrame
+    end
+end
+
+function teleportBlobsToPlayer()
+    local blobsFolder = workspace:FindFirstChild("Blobs")
+    local batchCount = 10 -- Teleport 10 blobs at a time
+    local delayBetweenBatches = 0.1 -- Wait 0.1 seconds between batches
+
+    if blobsFolder and blobsFolder:IsA("Folder") then
+        local blobs = blobsFolder:GetChildren()
+        local batchStart = 1
+
+        while batchStart <= #blobs do
+            local batchEnd = math.min(batchStart + batchCount - 1, #blobs)
+            for i = batchStart, batchEnd do
+                teleportBlobToPlayer(blobs[i])
+            end
+            wait(delayBetweenBatches)
+            batchStart = batchEnd + 1
+        end
+    else
+        warn("Blobs folder not found")
+    end
+end
+
+Tab1Section:NewButton("Bring All Blobs (LAGGY)", "tps every blob to you", function()
+teleportBlobsToPlayer()
+end)
+
+Tab1Section:NewButton("Kill lower size", "kills people with less size than you", function()
+checkSizesAndTeleport()
+end)
