@@ -1,3 +1,5 @@
+--BRING ALL BLOBS
+
 local Workspace = game:GetService("Workspace")
 local LocalPlayer = game.Players.LocalPlayer
 local character = LocalPlayer.Character
@@ -17,12 +19,12 @@ local function teleportBlobsToPlayer()
     if blobsFolder and blobsFolder:IsA("Folder") then
         for _, blob in pairs(blobsFolder:GetChildren()) do
             teleportBlobToPlayer(blob)
-            wait(1) -- Wait 1 second between teleporting blobs
+            -- Removed the wait to make it manual
         end
     else
         warn("Blobs folder not found or is not a Folder.")
     end
 end
 
--- Start the teleport process
+-- Call the function to manually start the teleport process
 teleportBlobsToPlayer()
