@@ -81,8 +81,14 @@ end)
 
 Tab1Section:NewToggle("Auto collect cash", ".", function(t)
 getgenv().FLO = t
-while getgenv().FLO and wait(.3) do
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-382.78, 14.1, 1338.41)
+while getgenv().FLO and wait(.1) do
+local args = {
+    [1] = 5,
+    [2] = "collectMoney",
+    [3] = game:GetService("Players").LocalPlayer
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("ReplicaRemoteEvents"):WaitForChild("Replica_ReplicaSignal"):FireServer(unpack(args))
 end
 end)
 
