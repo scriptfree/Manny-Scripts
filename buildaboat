@@ -1,0 +1,5 @@
+--Vote launch
+workspace:WaitForChild("BlackZone"):WaitForChild("VoteLaunchRE"):FireServer()
+
+--Win
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-52.94236755371094, -360.4062194824219, 9487.2607421875)
