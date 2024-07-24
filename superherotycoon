@@ -6,5 +6,5 @@ local args = {
 }
 
 game:GetService("ReplicatedStorage"):WaitForChild("ReplicaRemoteEvents"):WaitForChild("Replica_ReplicaSignal"):FireServer(unpack(args))
-wait(1)
+wait(0.1)
 end
