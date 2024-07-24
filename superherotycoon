@@ -1,53 +1,4 @@
 
---Auto collect money
-while true do
-local args = {
-    [1] = 5,
-    [2] = "collectMoney",
-    [3] = game:GetService("Players").LocalPlayer
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("ReplicaRemoteEvents"):WaitForChild("Replica_ReplicaSignal"):FireServer(unpack(args))
-wait(0.1)
-end
-
-
---Give gear
-local args = {
-    [1] = 10,
-    [2] = "Power",
-    [3] = "Giver4" --Change the number 1 - 7
-}
-
-game:GetService("ReplicatedStorage"):WaitForChild("SharedPackages"):WaitForChild("_Index"):WaitForChild("sleitnick_net@0.1.0"):WaitForChild("net"):WaitForChild("RF/HandleTycoonGiverPlayerRequest"):InvokeServer(unpack(args))
-
---Give all gears
-local args = {
-    [1] = 1, --1 - 10
-    [2] = "Power",
-    [3] = "Giver1" --Change the number 1 - 7
-}
-
-local function updateArgsAndInvoke()
-    for i = 1, 10 do
-        args[1] = i
-        for j = 1, 7 do
-            args[3] = "Giver" .. j
-            game:GetService("ReplicatedStorage"):WaitForChild("SharedPackages"):WaitForChild("_Index"):WaitForChild("sleitnick_net@0.1.0"):WaitForChild("net"):WaitForChild("RF/HandleTycoonGiverPlayerRequest"):InvokeServer(unpack(args))
-            wait(0)
-        end
-    end
-end
-
--- Start the update loop
-updateArgsAndInvoke()
-
-
-
-
-
-
-
 
 
 
@@ -72,10 +23,28 @@ local Window = Library.CreateLib("Drop the soap GUI", "DarkTheme")
 local Tab1 = Window:NewTab("Main")
 local Tab1Section = Tab1:NewSection("Configs")
 
+local args = {
+    [1] = 1, --1 - 10
+    [2] = "Power",
+    [3] = "Giver1" --Change the number 1 - 7
+}
+
+local function updateArgsAndInvoke()
+    for i = 1, 10 do
+        args[1] = i
+        for j = 1, 7 do
+            args[3] = "Giver" .. j
+            game:GetService("ReplicatedStorage"):WaitForChild("SharedPackages"):WaitForChild("_Index"):WaitForChild("sleitnick_net@0.1.0"):WaitForChild("net"):WaitForChild("RF/HandleTycoonGiverPlayerRequest"):InvokeServer(unpack(args))
+            wait(0)
+        end
+    end
+end
 
 
-Tab1Section:NewButton("Kill all inmates", ".", function()
 
+Tab1Section:NewButton("Get all gears", ".", function()
+
+updateArgsAndInvoke()
 
 end)
 
