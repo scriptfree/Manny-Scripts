@@ -94,3 +94,8 @@ Tab1Section:NewButton("Kill lower size", "kills people with less size than you",
 checkSizesAndTeleport()
 end)
 
+Tab1Section:NewButton("Rejoin", "rejoins the same server", function()
+game:service("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+end)
+
+
