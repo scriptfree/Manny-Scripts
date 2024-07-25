@@ -1,0 +1,6 @@
+local args = {
+    [1] = "M1895",
+    [2] = "Pres Rifles"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("73d8cc69-7498-440f-8255-f96518030979"):InvokeServer(unpack(args))
