@@ -1,0 +1,34 @@
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = game.Players.LocalPlayer
+local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+-- Function to teleport an object to the player's position
+local function teleportObjectToPlayer(object)
+    if hrp and object:IsA("BasePart") then
+        object.CFrame = hrp.CFrame
+    end
+end
+
+-- Function to find and teleport one object named "CoinLobby" to the player
+local function teleportOneCoinLobbyToPlayer()
+    local found = false
+
+    for _, object in pairs(Workspace:GetDescendants()) do
+        if object.Name == "CoinLobby" and object:IsA("BasePart") then
+            teleportObjectToPlayer(object)
+            found = true
+            break
+        end
+    end
+
+    if not found then
+        warn("No CoinLobby objects found.")
+    end
+end
+
+
+while true do
+teleportOneCoinLobbyToPlayer()
+wait(0.01)
+end
