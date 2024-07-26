@@ -1,0 +1,32 @@
+--Super evolution
+
+
+--BRING ALL ENEMIES
+-- Get the player
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Define the target folder
+local enemiesFolder = workspace:WaitForChild("Enemies")
+local targetFolder = enemiesFolder:WaitForChild("1")
+
+-- Function to teleport all items in the target folder to the player's position
+local function teleportItemsToPlayer()
+    local playerPosition = character.PrimaryPart.Position
+
+    for _, item in ipairs(targetFolder:GetChildren()) do
+        if item:IsA("BasePart") then
+            item.CFrame = CFrame.new(playerPosition)
+        elseif item:IsA("Model") then
+            -- Move models by setting the primary part's position
+            local primaryPart = item.PrimaryPart
+            if primaryPart then
+                local offset = item:GetPrimaryPartCFrame() - item:GetPrimaryPartCFrame().p
+                item:SetPrimaryPartCFrame(CFrame.new(playerPosition) * offset)
+            end
+        end
+    end
+end
+
+-- Call the function to teleport items
+teleportItemsToPlayer()
