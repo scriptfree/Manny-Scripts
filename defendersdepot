@@ -1,0 +1,36 @@
+--Bring all crates
+  -- Get the player and character
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local torso = character:WaitForChild("HumanoidRootPart")
+
+-- Function to teleport all crates to the player's character
+local function teleportCratesToPlayer()
+    local crates = workspace:GetDescendants() -- Get all descendants in the workspace
+    local playerPosition = torso.Position
+
+    for _, item in ipairs(crates) do
+        if item:IsA("BasePart") and item.Name == "Crate" then
+            item.CFrame = torso.CFrame
+            item.CanCollide = false
+        elseif item:IsA("Model") and item.Name == "Crate" then
+            -- Move models by setting the primary part's position
+            local primaryPart = item.PrimaryPart
+            if primaryPart then
+                local offset = item:GetPrimaryPartCFrame() - item:GetPrimaryPartCFrame().p
+                item:SetPrimaryPartCFrame(torso.CFrame * offset)
+                for _, part in ipairs(item:GetChildren()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = false
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- Continuously teleport crates to the player
+while true do
+    teleportCratesToPlayer()
+    wait(1) -- Adjust the wait time as needed
+end
