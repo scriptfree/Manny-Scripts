@@ -1,0 +1,105 @@
+--T to toggle
+
+
+-- Services
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+-- Constants
+local TOGGLE_KEY = Enum.KeyCode.T -- Key to toggle the feature
+local POSITION_OFFSET = 100 -- Y-axis position increase
+local DEFAULT_GRAVITY = 196.2 -- Default game gravity
+local FADE_TIME = 1 -- Time for fade out in seconds
+
+-- Variables
+local player = Players.LocalPlayer
+local isFeatureActive = false
+local ScreenGui
+local toggleText
+
+-- Function to create and set up the GUI
+local function createGui()
+    ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "ToggleGUI"
+    ScreenGui.Parent = player:WaitForChild("PlayerGui")
+
+    toggleText = Instance.new("TextLabel")
+    toggleText.Name = "ToggleText"
+    toggleText.Parent = ScreenGui
+    toggleText.Size = UDim2.new(0, 200, 0, 50)
+    toggleText.Position = UDim2.new(0.5, -100, 0, 10) -- Centered at the top
+    toggleText.TextScaled = true
+    toggleText.BackgroundTransparency = 1
+    toggleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    toggleText.TextStrokeTransparency = 0.5
+    toggleText.Text = "Off" -- Initial state
+end
+
+-- Tween for fade out
+local function fadeOutText()
+    local tweenInfo = TweenInfo.new(FADE_TIME, Enum.EasingStyle.Linear, Enum.EasingDirection.In)
+    local tweenGoal = {TextTransparency = 1}
+    local tween = TweenService:Create(toggleText, tweenInfo, tweenGoal)
+    tween:Play()
+end
+
+-- Function to adjust position and gravity
+local function adjustCharacter()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    local primaryPart = character:WaitForChild("HumanoidRootPart")
+
+    if isFeatureActive then
+        -- Set the game gravity to 0
+        game.Workspace.Gravity = 0
+
+        -- Move the character's position 100 units higher on the Y axis
+        local currentPosition = primaryPart.Position
+        primaryPart.CFrame = CFrame.new(currentPosition.X, currentPosition.Y + POSITION_OFFSET, currentPosition.Z)
+
+        -- Set the character's gravity to 0
+        humanoid.PlatformStand = true
+        humanoid.UseJumpPower = true
+        humanoid.JumpPower = 0
+
+        -- Update the GUI text
+        toggleText.Text = "On"
+    else
+        -- Restore game gravity to default
+        game.Workspace.Gravity = DEFAULT_GRAVITY
+
+        -- Restore gravity settings for the character
+        humanoid.PlatformStand = false
+        humanoid.UseJumpPower = false
+
+        -- Update the GUI text
+        toggleText.Text = "Off"
+    end
+
+    -- Fade out the text after 1 second
+    wait(1)
+    fadeOutText()
+end
+
+-- Handle key press to toggle feature
+local function onKeyPress(input)
+    if input.KeyCode == TOGGLE_KEY then
+        isFeatureActive = not isFeatureActive
+        adjustCharacter()
+    end
+end
+
+-- Initialize GUI and connect key press event
+local function setup()
+    createGui()
+    UserInputService.InputBegan:Connect(onKeyPress)
+end
+
+-- Connect to character respawn
+player.CharacterAdded:Connect(function()
+    setup()
+end)
+
+-- Set up the initial character
+setup()
