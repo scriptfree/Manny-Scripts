@@ -1,0 +1,29 @@
+-- Configuration
+local localPlayer = game.Players.LocalPlayer
+
+-- Function to teleport all "speedbox" objects to the local player's character
+local function teleportSpeedboxes()
+    local character = localPlayer.Character
+    if not character then return end
+
+    local primaryPart = character.PrimaryPart or character:FindFirstChildWhichIsA("BasePart")
+    if not primaryPart then return end
+
+    local workspaceItems = workspace:GetDescendants()
+
+    for _, item in ipairs(workspaceItems) do
+        if item:IsA("BasePart") and item.Name == "speedbox" then
+            -- Teleport the item to the player's character
+            item.CFrame = primaryPart.CFrame
+
+            -- Disable collisions
+            item.CanCollide = false
+        end
+    end
+end
+
+-- Loop to ensure all "speedbox" objects are consistently teleported to the player
+while true do
+    teleportSpeedboxes()
+    wait(0.05) -- Adjust the wait time as needed
+end
