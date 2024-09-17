@@ -6,7 +6,7 @@
 
 game:GetService("StarterGui"):SetCore("SendNotification",{
                 Title = "Loaded!";
-                Text = "Provided by xubs script! ";
+                Text = "Made by Manny on scriptblox";
                 Duration = 1.5;})
 
 
