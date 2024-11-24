@@ -35,7 +35,7 @@ local function updateArgsAndInvoke()
         for j = 1, 7 do
             args[3] = "Giver" .. j
             game:GetService("ReplicatedStorage"):WaitForChild("SharedPackages"):WaitForChild("_Index"):WaitForChild("sleitnick_net@0.1.0"):WaitForChild("net"):WaitForChild("RF/HandleTycoonGiverPlayerRequest"):InvokeServer(unpack(args))
-            wait(0)
+            wait()
         end
     end
 end
