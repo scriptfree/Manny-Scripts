@@ -103,13 +103,6 @@ Tab:AddToggle({
     end    
 })
 
-Tab:AddButton({
-	Name = "Supported Games List",
-	Callback = function()
-		setclipboard("https://raw.githubusercontent.com/dogefriendyt/Doge-Hub/main/list")
-  	end    
-})
-
 
 Tab:AddSlider({
 	Name = "Walkspeed",
