@@ -1,0 +1,22 @@
+-- Define a function to teleport the player's character to the target
+local function teleportTo(part)
+    local player = game.Players.LocalPlayer
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        local hrp = player.Character.HumanoidRootPart
+        hrp.CFrame = part.CFrame
+        wait(0.5) -- Short delay between teleports
+    end
+end
+
+-- Check if the GameObjects folder exists
+local gameObjects = workspace:FindFirstChild("GameObjects")
+if gameObjects then
+    -- Loop through all objects inside GameObjects
+    for _, obj in ipairs(gameObjects:GetChildren()) do
+        if obj.Name == "Credit" and obj:IsA("BasePart") then
+            teleportTo(obj)
+        end
+    end
+else
+    warn("GameObjects folder not found in workspace!")
+end
